@@ -731,3 +731,32 @@ function(a) {
         }
     })
 }(jQuery);
+
+!function(glob) {
+    "use strict";
+    var templates = {
+		sidebar: '<div class="sidebar-container"><div class="sidebar-profile"><a href="/#about"><img class="sidebar-profile-picture" src="/img/serg.jpg" alt="Author&#39;s picture" /></a><h4 class="sidebar-profile-name">Serg Alekseev</h4><h5 class="sidebar-profile-bio">Использование карт на основе <strong>Leaflet</strong></h5></div><ul class="sidebar-buttons"><li class="sidebar-button"><a class="sidebar-button-link " href="/"><i class="sidebar-button-icon fa fa-lg fa-home"></i><span class="sidebar-button-desc">Home</span></a></li><li class="sidebar-button"><a class="sidebar-button-link " href="/categories"><i class="sidebar-button-icon fa fa-lg fa-bookmark"></i><span class="sidebar-button-desc">Categories</span></a></li><li class="sidebar-button"><a class="sidebar-button-link " href="/tags"><i class="sidebar-button-icon fa fa-lg fa-tags"></i><span class="sidebar-button-desc">Tags</span></a></li><li class="sidebar-button"><a class="sidebar-button-link " href="/archives"><i class="sidebar-button-icon fa fa-lg fa-archive"></i><span class="sidebar-button-desc">Archives</span></a></li><li class="sidebar-button"><a class="sidebar-button-link " href="/#about"><i class="sidebar-button-icon fa fa-lg fa-question"></i><span class="sidebar-button-desc">About</span></a></li></ul><ul class="sidebar-buttons"><li class="sidebar-button"><a class="sidebar-button-link " href="https://github.com/OriginalSin" target="_blank" rel="noopener"><i class="sidebar-button-icon fa fa-lg fa-github"></i><span class="sidebar-button-desc">GitHub</span></a></li><li class="sidebar-button"><a class="sidebar-button-link " href="https://stackexchange.com/users/12628109/serg-alekseev" target="_blank" rel="noopener"><i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i><span class="sidebar-button-desc">Stack Overflow</span></a></li></ul><ul class="sidebar-buttons"><li class="sidebar-button"><a class="sidebar-button-link " href="./index.xml"><i class="sidebar-button-icon fa fa-lg fa-rss"></i><span class="sidebar-button-desc">RSS</span></a></li></ul></div>',
+		about: '<div id="about-card"><div id="about-btn-close"><i class="fa fa-remove"></i></div><img id="about-card-picture" src="/img/serg.jpg" alt="Author&#39;s picture" /><h4 id="about-card-name">Serg Alekseev</h4><div id="about-card-bio">Vanilla es6 javascript <strong>COOL</strong></div><div id="about-card-job"><i class="fa fa-briefcase"></i><br/>Scanex</div><div id="about-card-location"><i class="fa fa-map-marker"></i><br/>Russia</div></div>',
+		footer: '<span class="copyrights">&copy; 2018 Alex Brothers. All Rights Reserved</span>',
+		'share-options-bar': '<i id="btn-close-shareoptions" class="fa fa-close"></i><ul class="share-options"><li class="share-option"><a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u="><i class="fa fa-facebook-official"></i><span>Share on Facebook</span></a></li><li class="share-option"><a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text="><i class="fa fa-twitter"></i><span>Share on Twitter</span></a></li><li class="share-option"><a class="share-option-btn" target="new" href="https://plus.google.com/share?url="><i class="fa fa-google-plus"></i><span>Share on Google&#43;</span></a></li></ul>',
+
+	};
+	for (var id in templates) {
+		var cont = document.getElementById(id),
+			str = templates[id];
+		if (cont) {
+			if (id === 'share-options-bar') {
+				str = str.replace(/href="([^"])"/g, 'href="$1' + location.href + '"');
+			}
+			cont.innerHTML = str;
+		}
+	}
+    var ab = function() {
+        //this.$blog = a("#blog"),
+    };
+    ab.prototype = {
+        run: function() {
+            var a = this;
+         }
+	};
+}(this);
