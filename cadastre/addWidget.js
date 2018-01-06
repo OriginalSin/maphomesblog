@@ -16,7 +16,7 @@
             }
         }
     }
-    var src = 'http://russian-face.ru/cadastre/cadastre.html' + postfix;
+    var src = '//russian-face.ru/cadastre/cadastre.html' + postfix;
     frame.setAttribute('src', src);
     var fB = document.getElementById('cadastreWidget');
     fB.appendChild(frame);
