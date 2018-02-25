@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.31.1 with theme Tranquilpeak 0.4.3-BETA">
+    <title>Привязка аэро-космических снимков на WebGL</title>
+    <meta name="author" content="Serg Alekseev">
+    <meta name="keywords" content="map, leaflet, rosreestr">
+
+    <link rel="icon" href="./favicon.png">
+
+    <meta name="description" content="Привязка аэро-космических снимков на WebGL.">
+    <meta property="og:description" content="Привязка аэро-космических снимков на WebGL.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Привязка аэро-космических снимков на WebGL">
+    <meta property="og:url" content="/2018/01/1941-avia/">
+    <meta property="og:site_name" content="Карты на основе Leaflet">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Карты на основе Leaflet">
+    <meta name="twitter:description" content="Привязка аэро-космических снимков на WebGL.">
+
+      <meta property="og:image" content="//www.gravatar.com/avatar/d09dc2d7aa5c467519e8af89f7b3d94c?s=640">
+      <meta property="og:image" content="//d1u9biwaxjngwg.cloudfront.net/elements-showcase/vintage-140.jpg">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/css/jquery.fancybox.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <script src="//www.kosmosnimki.ru/lib/geomixer_1.3/geomixer-src.js?key=E5FB6CCB5D23B5E119D2F1B26BCC57BD"></script>
+    <link href="//www.kosmosnimki.ru/lib/geomixer_1.3/geomixer.css" rel="stylesheet" />
+    <script src="./L.ImageTransformWebGL.js"></script>
+  </head>
+
+  <body>
+    <div id="blog">
+		<header id="header" data-behavior="4"></header>
+		<nav id="sidebar" data-behavior="4"></nav>
+
+		<div id="main" data-behavior="4" class="hasCoverMetaIn">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+            <div class="post-header main-content-wrap text-left">
+				<h1 class="post-title" itemprop="headline">Привязка аэро-космических снимков на WebGL</h1>
+				<div class="postShorten-meta post-meta">
+					<time itemprop="datePublished" datetime="2018-01-07T03:00:00Z">07.01.2018</time>
+					<span>in</span>
+						  <a class="category-link" href="./categories/map">map</a>, 
+						  <a class="category-link" href="./categories/leaflet">leaflet</a>
+						  <a class="category-link" href="./categories/WebGL">WebGL</a>
+				</div>
+			</div>
+          
+			<div class="post-content markdown" itemprop="articleBody">
+				<div class="main-content-wrap">
+                    <div id="map" style="height: 890px;"></div>
+				</div>
+			</div>
+
+          <div id="post-footer" class="post-footer main-content-wrap"></div>
+        </article>
+        <footer id="footer" class="main-content-wrap"></footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4"></div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4"></div>
+	  <div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+
+    <div id="about"></div>
+    
+    <div id="cover" style="background-image:url('/images/cover.jpg');"></div>
+  
+	<script src="/js/jquery-3.2.1.js" crossorigin="anonymous"></script>
+	<script src="/js/highlight.min.js" crossorigin="anonymous"></script>
+	<script src="/js/jquery.fancybox.js" crossorigin="anonymous"></script>
+
+<script>
+var postParams = {
+	nextUrl: '/2018/01/1941-avia/',
+	nextTitle: 'Немецкая аэрофотосъемка 1941 года',
+	prevUrl: '/',
+	prevTitle: 'Основная страница'
+};
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://maphomes.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+	<script src="/js/script.js"></script>
+    <script>
+	var map = new L.Map('map', {
+		center: new L.LatLng(56, 137.23),
+		zoom: 8
+	});
+
+	var layersControl = L.control.layers({
+		Google: L.tileLayer('//mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'),
+		Map: L.tileLayer.Mercator('//vec03.maps.yandex.net/tiles?l=map&v=17.09.21-1&x={x}&y={y}&z={z}&scale=1&lang=ru_RU', {
+			maxZoom: 21,
+			maxNativeZoom: 17
+		}).addTo(map)
+	}).addTo(map);
+	
+	var anchors = [
+			L.latLng([55.613245, 136.59558]),	// top-left
+			L.latLng([55.613245, 137.87820]),	// top-right
+			L.latLng([56.344192, 137.87820]),	// bottom-right
+			L.latLng([56.344192, 136.59558])	// bottom-left
+		],
+		clip = [
+			L.latLng([56.301281, 136.90579]),	// top-left
+			L.latLng([56.150009, 137.83902]),	// top-right
+			L.latLng([55.639533, 137.53169]),	// bottom-right
+			L.latLng([55.788635, 136.60979])	// bottom-left
+		];
+
+	var imageTransform = new L.ImageTransformWebGL('./image.jpg', anchors,
+		{
+			clip: clip,
+			opacity: 0.5,
+			disableSetClip: false
+		});
+
+	var drawAnchors = new L.GmxDrawing.Feature(map.gmxDrawing,
+		L.polygon(anchors, {color: 'red'}),
+		{editable: true, disableAddPoints: true, maxPoints: 4, type: 'Polygon', lineStyle: {color: 'blue'}, pointStyle: {shape: 'box'}}
+	).on('edit', function() {
+		var latlngs = drawAnchors.getLayers()[0].points.getLatLngs()[0];
+		imageTransform.setOpacity(0.5);
+		imageTransform.setAnchors(latlngs);
+	})
+	.on('editstop', function() {
+		imageTransform.setOpacity(1);
+	});
+
+	var overlay = L.featureGroup([
+		imageTransform,
+		drawAnchors
+	]).addTo(map);
+	layersControl.addOverlay(overlay, 'imageTransform');
+
+	if (imageTransform.options.clip) {
+		var drawClip = new L.GmxDrawing.Feature(map.gmxDrawing, L.polygon(clip), {editable: true, type: 'Polygon', lineStyle: {color: 'red'}, pointStyle: {color: 'red'}});
+		drawClip.on('edit', function() {
+			imageTransform.setClip(drawClip.getLayers()[0].points.getLatLngs()[0]);
+		});
+		overlay.addLayer(drawClip);
+	}
+
+	</script>
+  </body>
+</html>
