@@ -140,6 +140,7 @@ s.setAttribute('data-timestamp', +new Date());
 		var latlngs = drawAnchors.getLayers()[0].points.getLatLngs()[0];
 		imageTransform.setOpacity(0.5);
 		imageTransform.setAnchors(latlngs);
+        drawClip.rings[0].ring.setLatLngs(latlngs);
 	})
 	.on('editstop', function() {
 		imageTransform.setOpacity(1);
