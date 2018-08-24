@@ -30,14 +30,17 @@
     
     <link rel="stylesheet" href="./css/style.css" />
 
+	<script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
 
   <body>
-    <div id="blog">
-		<header id="header" data-behavior="1"></header>
+   <div id="blog">
+		<header id="header" data-behavior="1">
+		</header>
 		<nav id="sidebar" data-behavior="1"></nav>
 
 		<div id="main" data-behavior="1" class="hasCoverMetaIn">
+			<div data-netlify-identity-menu></div>
 			<section class="postShorten-group main-content-wrap">
 				<article class="postShorten postShorten--thumbnailimg-top" itemscope itemType="http://schema.org/BlogPosting">
 				  <div class="postShorten-wrap">
