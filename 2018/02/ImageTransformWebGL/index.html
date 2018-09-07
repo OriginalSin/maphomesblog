@@ -28,12 +28,14 @@
     <link rel="stylesheet" href="/css/jquery.fancybox.css" crossorigin="anonymous" />
     <link rel="stylesheet" href="/css/style.css" />
 
+	<script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script src="//www.kosmosnimki.ru/lib/geomixer_1.3/geomixer-src.js?key=E5FB6CCB5D23B5E119D2F1B26BCC57BD"></script>
     <link href="//www.kosmosnimki.ru/lib/geomixer_1.3/geomixer.css" rel="stylesheet" />
     <script src="./L.ImageTransformWebGL.js"></script>
   </head>
 
   <body>
+	<div data-netlify-identity-menu></div>
     <div id="blog">
 		<header id="header" data-behavior="4"></header>
 		<nav id="sidebar" data-behavior="4"></nav>
@@ -57,7 +59,8 @@
 				</div>
 			</div>
 
-          <div id="post-footer" class="post-footer main-content-wrap"></div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+		  </div>
         </article>
         <footer id="footer" class="main-content-wrap"></footer>
 
@@ -82,24 +85,10 @@ var postParams = {
 	prevUrl: '/',
 	prevTitle: 'Основная страница'
 };
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://maphomes.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
+	// <script src="/js/script.js"></script>
 </script>
-	<script src="/js/script.js"></script>
     <script>
+	
 	var map = new L.Map('map', {
 		center: new L.LatLng(55.72, 137.23),
 		zoom: 9
@@ -160,6 +149,51 @@ s.setAttribute('data-timestamp', +new Date());
 			overlay.addLayer(drawClip);
 		}
 
+	</script>
+    <script>
+var rep = 'originalsin/maphomesblog';
+var id = 1;
+var url = 'https://github.com/' + rep + '/issues/' + id;
+var api_url = 'https://api.github.com/repos/' + rep + '/issues';
+var issues_url = 'https://api.github.com/repos/' + rep + '/issues/' + id + '/comments';
+var cont = document.getElementsByClassName('post-footer')[0];
+
+fetch(api_url + '/' + id, {
+	headers: {Accept: "application/vnd.github.v3.html+json"},
+	})
+	.then(function(response) {return response.json();})
+	.catch(console.error)
+	.then(function(json) {
+		console.log('ffff', json);
+		var node = L.DomUtil.create('div', 'ab-issue', cont);
+		var t = "<img src='" + json.user.avatar_url + "' width='24px'>";
+		t += "<b><a href='" + json.user.html_url + "'>" + json.user.login + "</a></b>";
+		t += " posted at ";
+		t += "<em>" + new Date(json.created_at).toUTCString() + "</em>";
+		t += "<div id='ab-comment-hr'></div>";
+		t += json.body_html;
+		node.innerHTML = t;
+		if (json.comments) {
+			fetch(api_url + '/' + id + '/comments', {
+				headers: {Accept: "application/vnd.github.v3.html+json"},
+				})
+				.then(function(response) {return response.json();})
+				.catch(console.error)
+				.then(function(json) {
+					console.log('bbbb', json);
+					json.forEach(function(it) {
+						var node = L.DomUtil.create('div', 'ab-comment', cont);
+						var t = "<img src='" + it.user.avatar_url + "' width='24px'>";
+						t += "<b><a href='" + it.user.html_url + "'>" + it.user.login + "</a></b>";
+						t += " posted at ";
+						t += "<em>" + new Date(it.created_at).toUTCString() + "</em>";
+						t += "<div id='ab-comment-hr'></div>";
+						t += it.body_html;
+						node.innerHTML = t;
+					});
+			});
+		}
+});
 	</script>
   </body>
 </html>
