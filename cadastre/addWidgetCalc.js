@@ -16,7 +16,7 @@
             }
         }
     }
-    var src = '//russian-face.ru/cadastre/cadastreCalc.html' + postfix;
+    var src = '//mystifying-dijkstra-f69439.netlify.app/cadastre/cadastreCalc.html' + postfix;
     frame.setAttribute('src', src);
     var fB = document.getElementById('cadastreCalcWidget');
     fB.appendChild(frame);
